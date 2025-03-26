@@ -1,0 +1,241 @@
+openapi: 3.0.3
+info:
+  title: API Gestion - OpenAPI 3.0
+  version: 1.0.0
+  description: Api para los clientes, proveedores y articulos
+
+servers:
+  - url: http://localhost:3000
+
+components:
+  schemas:
+    Persona:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+        apellido1:
+          type: string
+        apellido2:
+          type: string
+        direccion:
+          type: string
+        poblacion:
+          type: string
+        provincia:
+          type: string
+        telefono:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+        - nombre
+        - apellido1
+        - email
+
+
+paths:
+  /clientes:
+    get:
+      summary: clientes
+      tags:
+        - Clientes
+      responses:
+        '200':
+          description: Lista de clientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Persona'
+  /cliente:
+    post:
+      summary: Crear cliente
+      tags:
+        - Cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Persona'
+      responses:
+        '201':
+          description: Cliente creado
+        '400':
+          description: Datos faltantes o inválidos
+
+    
+                  
+                  
+                  
+                  
+  /cliente/{id}:
+    get:
+      summary: Conseguir el cliente por su ID
+      tags:
+        - Cliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del cliente para buscar
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+        '404':
+          description: Cliente no encontrado
+
+    put:
+      summary: Actualizar cliente por ID
+      tags:
+        - Cliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del cliente para actualizar
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Persona'
+      responses:
+        '200':
+          description: Cliente actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+        '404':
+          description: Cliente no encontrado
+    
+    
+    delete:
+      summary: Eliminar por ID
+      tags:
+        - Cliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del cliente para actualizar
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Cliente eliminado :D
+        '404':
+          description: El cliente no existe ya :X
+          
+          
+  /proveedores:
+    get:
+      summary: proveedores
+      tags:
+        - Proveedores
+      responses:
+        '200':
+          description: Lista de proveedores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Persona'
+
+  /proveedor:
+    post:
+      summary: Crear proveedor
+      tags:
+        - Proveedores
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Persona'
+      responses:
+        '201':
+          description: Proveedor creado
+        '400':
+          description: Datos faltantes o inválidos
+
+  /proveedor/{id}:
+    get:
+      summary: Conseguir el proveedor por su ID
+      tags:
+        - Proveedores
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del proveedor a buscar
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Proveedor encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+        '404':
+          description: Proveedor no encontrado
+
+    put:
+      summary: Actualizar proveedor por ID
+      tags:
+        - Proveedores
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del proveedor para actualizar
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Persona'
+      responses:
+        '200':
+          description: Proveedor actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Persona'
+        '404':
+          description: Proveedor no encontrado
+
+    delete:
+      summary: Eliminar proveedor por ID
+      tags:
+        - Proveedores
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del proveedor a eliminar
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Proveedor eliminado :D
+        '404':
+          description: El proveedor no existe ya :X
