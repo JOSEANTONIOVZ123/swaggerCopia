@@ -35,6 +35,29 @@ components:
         - nombre
         - apellido1
         - email
+        
+    Articulo:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+        descripcion:
+          type: string
+        precioCompra:
+          type: number
+          format: float
+        precioVenta:
+          type: number
+          format: float
+        stock:
+          type: integer
+      required:
+        - nombre
+        - precioCompra
+        - precioVenta
+
 
 
 paths:
@@ -239,3 +262,106 @@ paths:
           description: Proveedor eliminado :D
         '404':
           description: El proveedor no existe ya :X
+          
+          
+          
+          
+          
+  /articulos:
+    get:
+      summary: Obtener todos los artículos
+      tags:
+        - Artículos
+      responses:
+        '200':
+          description: Lista de artículos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Articulo'
+
+  /articulo:
+    post:
+      summary: Crear un nuevo artículo
+      tags:
+        - Artículos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Articulo'
+      responses:
+        '201':
+          description: Artículo creado correctamente
+        '400':
+          description: Datos inválidos
+
+  /articulo/{id}:
+    get:
+      summary: Obtener artículo por ID
+      tags:
+        - Artículos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del artículo a obtener
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Artículo encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Articulo'
+        '404':
+          description: Artículo no encontrado
+
+    put:
+      summary: Actualizar artículo por ID
+      tags:
+        - Artículos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del artículo a actualizar
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Articulo'
+      responses:
+        '200':
+          description: Artículo actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Articulo'
+        '404':
+          description: Artículo no encontrado
+
+    delete:
+      summary: Eliminar artículo por ID
+      tags:
+        - Artículos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del artículo a eliminar
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Artículo eliminado
+        '404':
+          description: Artículo no encontrado
+
